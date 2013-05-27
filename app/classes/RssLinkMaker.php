@@ -1,5 +1,5 @@
 ﻿<?php
-  include('RssLink.php');
+  include('rsslink.php');
 
-$linkmaker = new RssLink();
+$linkmaker = new Rsslink();
 $linkmaker->saveHtml();
