@@ -30,7 +30,10 @@ class Controller_Free extends Controller_Template
 	  $data['token'] = Security::fetch_token();
 	  $data['thread_title_max'] = Thread::TITLE_MAX;
 	  $data['thread_summary_max'] = Thread::SUMMARY_MAX;
-	  $this->template->content = View::forge('free/list', $data);
+	  $link = new RssLink();
+	  $data['rss_link_html'] = $link->loadHtml();
+	  var_dump($data['rss_link_html']);
+	  $this->template->content = View::forge('free/list', $data, false);
 
 	}
 
