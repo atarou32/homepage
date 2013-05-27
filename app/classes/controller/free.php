@@ -12,7 +12,7 @@
 
 use \Model\Free\Thread;
 use \Model\Free\Res;
-use \RssLink;
+use RssLink;
 
 class Controller_Free extends Controller_Template
 {
