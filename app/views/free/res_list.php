@@ -24,7 +24,7 @@
       echo '<br>';
       echo Form::submit();
       echo '</div>';
-      echo '<a href ="'. Uri::create('free'). '?>">スレッド一覧</a>';
+      echo '<a href ="'. Uri::create('free'). '">スレッド一覧</a>';
       echo '</div>';
       echo Form::close(); ?>
 

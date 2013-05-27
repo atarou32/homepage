@@ -24,5 +24,37 @@
       echo '</div>';
       echo '</div>';
       echo Form::close(); ?>
+
+    <h3>人気エントリー</h3>
+    <?php $rss = 'http://feeds.feedburner.com/hatena/b/hotentry';
+          $data = simplexml_load_file($rss);
+          foreach($data->item as $itemValue) {
+           echo '<a href="'.$itemValue->link.'">'.$itemValue->title.'</a><br />';
+	  }
+    ?>
+
+    <h3>OReilly の書籍</h3>
+    <?php $rss = 'http://www.oreilly.co.jp/catalog/soon.xml';
+          $data = simplexml_load_file($rss);
+          foreach($data->item as $itemValue) {
+           echo '<a href="'.$itemValue->link.'">'.$itemValue->title.'</a><br />';
+	  }
+    ?>
+
+    <h3>SimpleTalk RSS</h3>
+    <?php $rss = 'https://www.simple-talk.com/feed/';
+          $data = simplexml_load_file($rss);
+          foreach($data->channel->item as $itemValue) {
+           echo '<a href="'.$itemValue->link.'">'.$itemValue->title.'</a><br />';
+	  }
+    ?>
+
+    <h3>コンピュータ関係の書籍</h3>
+    <?php $rss = 'http://www.computerbook.jp/rss/books/index.xml';
+          $data = simplexml_load_file($rss);
+          foreach($data->channel->item as $itemValue) {
+           echo '<a href="'.$itemValue->link.'">'.$itemValue->title.'</a><br />';
+	  }
+    ?>
   </body>
 </html>
