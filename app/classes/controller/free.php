@@ -137,16 +137,16 @@ class Controller_Free extends Controller_Template
 	  return;
 	}
 
-	public function action_save_res($thread_id)
+	public function action_save_res($thread_id = null)
 	{
-	  if ("POST" !== $_SERVER['REQUEST_METHOD']) {
-	    return Response::redirect('free/thread/'.$thread_id);
+	  if ("POST" !== $_SERVER['REQUEST_METHOD'] or $thread_id === null) {
+	    return Response::redirect('free');
 	  }
 
 	  $ip_address = Input::real_ip();
 	  $body = Input::post('body');
 
-	  $errors = $this->validateResPost($ip_address, $body);
+	  $errors = $this->validateResPost($ip_address, $body, $thread_id);
 
 	  if (!security::check_token()) {
 		  $errors[] = '時間切れです';
@@ -170,7 +170,22 @@ class Controller_Free extends Controller_Template
 	  $res->ipaddress = $ip_address;
 	  $res->body = $body;
 	  $res->thread_id = $thread_id;
-	  $res->save();
+
+	  try {
+
+	    DB::start_transaction();
+	    $thread = Thread::find()->where('id',$thread_id)->get();
+	    if (empty($thread)) {
+	      throw new Exception('スレッドがありません');
+	    }
+	    $res->save();
+	    DB::commit_transaction();
+	  }catch (Exception $e) {
+	    DB::rollback_transaction();
+	    $_SESSION['error'] = array();
+	    $_SESSION['error'][] = '投稿に失敗しました';
+	    return Response::redirect('free');
+	  }
 
 	  $_SESSION['success'] = '投稿しました';
 	  $this->listRes('',$thread_id);
