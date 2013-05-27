@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
   <head>
-    <?php echo Asset::css('bootstrap.css') ?>
+  
     <style type="text/css">
       #wrapper{
         margin:0 auto;
@@ -58,6 +58,18 @@
       .clearfix {
 	display:block;
       }
+
+      .border {
+        margin: 10px 10px;
+        padding: 5px;
+        border: medium solid #DDAAAA;
+	border-width: 2px;
+      }
+      .border > .p {
+	padding-left:2em;
+      }
+        
+
       </style>
       <meta charset="UTF-8">
       <title><?php echo htmlspecialchars($title, ENT_QUOTES,"UTF-8"); ?></title>
