@@ -32,7 +32,6 @@ class Controller_Free extends Controller_Template
 	  $data['thread_summary_max'] = Thread::SUMMARY_MAX;
 	  $link = new RssLink();
 	  $data['rss_link_html'] = $link->loadHtml();
-	  var_dump($data['rss_link_html']);
 	  $this->template->content = View::forge('free/list', $data, false);
 
 	}
