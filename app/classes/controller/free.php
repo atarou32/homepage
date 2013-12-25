@@ -22,7 +22,10 @@ class Controller_Free extends Controller_Template
 	{
 	  // list threads
 	  $data = array();
-	  $data['rows'] = Thread::find()->get();
+	  $data['rows'] = Thread::find('all');
+	  if ($data['rows'] == null) { 
+		$data['rows'] = array();
+	  }
 	  $this->template->title = $this->site_title;
 	  $data['thread_title'] = $title;
 	  $data['thread_summary'] = $summary;
@@ -40,8 +43,8 @@ class Controller_Free extends Controller_Template
 	{
 	  //list res
 	  $data = array();
-	  $data['rows'] = Res::find()->where('thread_id', $thread_id)->order_by('id', 'ASC')->get();
-	  $thread = Thread::find()->where('id', $thread_id)->get_one();
+	  $data['rows'] = DB::select()->from('free_res_tbl')->where('thread_id', $thread_id)->order_by('id', 'ASC')->execute()->as_array();
+	  $thread = DB::select()->from('free_thread_tbl')->where('id', $thread_id)->execute()->as_array()[0];
 	  $this->template->title = $this->site_title;
 	  $data['res_body'] = $body;
 	  $data['thread_title'] = $thread['title'];
@@ -174,7 +177,7 @@ class Controller_Free extends Controller_Template
 	  try {
 
 	    DB::start_transaction();
-	    $thread = Thread::find()->where('id',$thread_id)->get();
+	    $thread = DB::select()->from('free_thread_tbl')->where('id',$thread_id)->execute()->as_array();
 	    if (empty($thread)) {
 	      throw new Exception('スレッドがありません');
 	    }
